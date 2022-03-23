@@ -7,7 +7,6 @@ export { Key, VNode, VNodeData, vnode } from "./vnode";
 // helpers
 export { AttachData, attachTo } from "./helpers/attachto";
 export { array, primitive } from "./is";
-export { toVNode } from "./tovnode";
 export {
   VNodes,
   VNodeChildElement,

@@ -1,6 +1,6 @@
 import { assert } from "chai";
 
-import { init, styleModule, h, toVNode } from "../../src/index";
+import { init, styleModule, h } from "../../src/index";
 
 const patch = init([styleModule]);
 
@@ -155,20 +155,6 @@ describe("style", function () {
     button.addEventListener("transitionend", function () {
       assert.strictEqual(document.querySelector("button"), null);
       done();
-    });
-  });
-  describe("using toVNode()", function () {
-    it("handles (ignoring) comment nodes", function () {
-      const comment = document.createComment("yolo");
-      const prevElm = document.createElement("div");
-      prevElm.appendChild(comment);
-      const nextVNode = h("div", [h("span", "Hi")]);
-      elm = patch(toVNode(prevElm), nextVNode).elm;
-      assert.strictEqual(elm, prevElm);
-      assert.strictEqual(elm.tagName, "DIV");
-      assert.strictEqual(elm.childNodes.length, 1);
-      assert.strictEqual(elm.childNodes[0].tagName, "SPAN");
-      assert.strictEqual(elm.childNodes[0].textContent, "Hi");
     });
   });
 });
