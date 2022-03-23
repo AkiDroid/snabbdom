@@ -27,12 +27,3 @@ export { Dataset, datasetModule } from "./modules/dataset";
 export { On, eventListenersModule } from "./modules/eventlisteners";
 export { Props, propsModule } from "./modules/props";
 export { VNodeStyle, styleModule } from "./modules/style";
-
-// JSX
-export {
-  JsxVNodeChild,
-  JsxVNodeChildren,
-  FunctionComponent,
-  jsx,
-  Fragment,
-} from "./jsx";
