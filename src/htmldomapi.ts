@@ -3,11 +3,6 @@ export interface DOMAPI {
     tagName: any,
     options?: ElementCreationOptions
   ) => HTMLElement;
-  createElementNS: (
-    namespaceURI: string,
-    qualifiedName: string,
-    options?: ElementCreationOptions
-  ) => Element;
   createTextNode: (text: string) => Text;
   createComment: (text: string) => Comment;
   insertBefore: (
@@ -32,18 +27,6 @@ function createElement(
   options?: ElementCreationOptions
 ): HTMLElement {
   return document.createElement(tagName, options);
-}
-
-function createElementNS(
-  namespaceURI: string,
-  qualifiedName: string,
-  options?: ElementCreationOptions
-): Element {
-  return document.createElementNS(namespaceURI, qualifiedName, options);
-}
-
-function createDocumentFragment(): DocumentFragment {
-  return document.createDocumentFragment();
 }
 
 function createTextNode(text: string): Text {
@@ -104,7 +87,6 @@ function isComment(node: Node): node is Comment {
 
 export const htmlDomApi: DOMAPI = {
   createElement,
-  createElementNS,
   createTextNode,
   createComment,
   insertBefore,
