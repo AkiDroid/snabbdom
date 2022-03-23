@@ -63,10 +63,7 @@ const hooks: Array<keyof Module> = [
   "post",
 ];
 
-export function init(
-  modules: Array<Partial<Module>>,
-  domApi?: DOMAPI,
-) {
+export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
   const cbs: ModuleHooks = {
     create: [],
     update: [],
@@ -88,13 +85,7 @@ export function init(
   }
 
   function emptyNodeAt(elm: Element) {
-    return vnode(
-      api.tagName(elm).toLowerCase(),
-      {},
-      [],
-      undefined,
-      elm
-    );
+    return vnode(api.tagName(elm).toLowerCase(), {}, [], undefined, elm);
   }
 
   function createRmCb(childElm: Node, listeners: number) {
@@ -118,14 +109,16 @@ export function init(
     }
     const children = vnode.children;
     const sel = vnode.sel;
+    // 注释节点
     if (sel === "!") {
       if (isUndef(vnode.text)) {
         vnode.text = "";
       }
       vnode.elm = api.createComment(vnode.text!);
+      // 非空节点
     } else if (sel !== undefined) {
       const tag = sel;
-      const elm = vnode.elm = api.createElement(tag, data);
+      const elm = (vnode.elm = api.createElement(tag, data));
       for (i = 0; i < cbs.create.length; ++i) cbs.create[i](emptyNode, vnode);
       if (is.array(children)) {
         for (i = 0; i < children.length; ++i) {
@@ -144,6 +137,7 @@ export function init(
           insertedVnodeQueue.push(vnode);
         }
       }
+      // text节点
     } else {
       vnode.elm = api.createTextNode(vnode.text!);
     }
@@ -346,10 +340,7 @@ export function init(
     hook?.postpatch?.(oldVnode, vnode);
   }
 
-  return function patch(
-    oldVnode: VNode | Element,
-    vnode: VNode
-  ): VNode {
+  return function patch(oldVnode: VNode | Element, vnode: VNode): VNode {
     let i: number, elm: Node, parent: Node;
     const insertedVnodeQueue: VNodeQueue = [];
     for (i = 0; i < cbs.pre.length; ++i) cbs.pre[i]();
